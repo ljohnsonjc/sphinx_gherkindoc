@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sphinx-gherkindoc &mdash; Sphinx - Gherkindoc 3.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sphinx - Gherkindoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Library</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sphinx_gherkindoc.html">sphinx_gherkindoc package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Maintainers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html#ways-to-contribute">Ways to Contribute</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#getting-started">Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#submitting-pull-requests">Submitting Pull Requests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CONTRIBUTING.html#review-change-workflow">Review/Change Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#code-standards">Code Standards</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sphinx - Gherkindoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>sphinx-gherkindoc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sphinx-gherkindoc">
+<h1>sphinx-gherkindoc<a class="headerlink" href="#sphinx-gherkindoc" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> brings Gherkin goodness
+into the Sphinx/reStructuredText (rST) world.</p>
+<div class="section" id="why-should-i-use-it">
+<h2>Why should I use it?<a class="headerlink" href="#why-should-i-use-it" title="Permalink to this headline">¶</a></h2>
+<p><strong>Share your requirements with your larger team.</strong>
+Gherkin makes it easy for anyone to read requirements.
+Sphinx makes Gherkin pretty enough to be readable.
+<code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> handles converting flat-text feature files
+into easy to read documents you won’t cringe to share with your larger team.</p>
+<p><strong>Easily see what steps you have and where you are using them.</strong>
+<code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> can create a glossary of your steps.
+This helps makes it easy to:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>find steps to reuse</p></li>
+<li><p>notice similar steps that might be duplicates or unintended variations</p></li>
+<li><p>see patterns that you might exploit to reduce the number of steps you have</p></li>
+<li><p>find out where and which feature files would be affected
+if a step’s wording or implementation changes</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="how-does-it-do-that">
+<h2>How does it do that?<a class="headerlink" href="#how-does-it-do-that" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> recursively scans a given directory
+to find all the feature and markup files,
+and converts them into files
+that can be included in Sphinx-based documentation.
+This script was inspired by <code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span></code>
+which does a similar thing for source code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This tool only creates the rST inputs for a sphinx document run,
+you still need to fit these files
+in to your larger documentation building process yourself.</p>
+</div>
+<p>For specific details on the command line options,
+please consult the <code class="docutils literal notranslate"><span class="pre">--help</span></code> output.
+Most command line options mirror their counterpart in <code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span></code>.</p>
+<p>For the most basic usage, an input (<code class="docutils literal notranslate"><span class="pre">&lt;gherkin_path&gt;</span></code>)
+and output (<code class="docutils literal notranslate"><span class="pre">&lt;output_path&gt;</span></code>) path must be provided.
+The files put in to the <code class="docutils literal notranslate"><span class="pre">&lt;output_path&gt;</span></code>
+can be incorporated into any larger documentation,
+created by any means.</p>
+<p>Additionally, a list of <code class="docutils literal notranslate"><span class="pre">fnmatch</span></code>-compatible patterns can be added
+to the command line,
+to indicate directories to be excluded from processing.</p>
+<p>One notable addition is the step glossary(<code class="docutils literal notranslate"><span class="pre">-G</span></code>, <code class="docutils literal notranslate"><span class="pre">--step-glossary</span></code>).
+The step glossary command line option causes <code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code>
+to create the named file in the <code class="docutils literal notranslate"><span class="pre">&lt;output_path&gt;</span></code> directory.
+The step glossary content is formatted into two lists:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A list of all the steps found, in alphabetical order.
+Each item in this list is a link to its details in the second list.</p></li>
+<li><p>A list of the steps showing the file names and line numbers
+where they are used.
+This list is in order by the most number of uses first.</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="how-are-my-files-converted">
+<h2>How are my files converted?<a class="headerlink" href="#how-are-my-files-converted" title="Permalink to this headline">¶</a></h2>
+<p>When scanning the <code class="docutils literal notranslate"><span class="pre">&lt;gherkin_path&gt;</span></code> directory tree,
+<code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> will do the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Feature files found
+are processed into rST files in the <code class="docutils literal notranslate"><span class="pre">&lt;output_path&gt;</span></code> directory.</p></li>
+<li><p>Directories will be converted to Sphinx Table of Contents (TOC) files that
+link to any feature files in the same directory,
+and to any TOC files from direct subdirectories.</p></li>
+<li><p>Any rST files found in a directory have their contents copied
+to the front of the TOC file for that directory.
+If more than one rST file is found in a directory,
+they are processed in sort order.</p></li>
+<li><p>If no rST files are found in a directory,
+then a header for the TOC is created based
+on the contents of a <code class="docutils literal notranslate"><span class="pre">display_name.txt</span></code> file, if present,
+or the name of the directory.</p></li>
+<li><p>Any MarkDown (md) files are referenced
+from the TOC file for the directory they are in.</p></li>
+<li><p>Directories with no feature, rST, or md files are pruned,
+recursively upwards.</p></li>
+</ul>
+</div></blockquote>
+<p>The meat’n’potatoes will be your feature files.
+Put rST files next to your feature files
+to present context and additional helpful material.
+If any rST files are in the same directory,
+they should also contain any appropriate headers
+and other such formatting.
+<code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code> will only create (minimal) headers when
+there are no rST files present at all.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Disclaimer: This <cite>is not</cite> a tutorial on how to use or configure Sphinx.
+It <cite>is</cite> some common ways you can use <code class="docutils literal notranslate"><span class="pre">sphinx-gherkindoc</span></code>
+as part of your documentation generation.
+Reminder if you skipped all that stuff above:
+<code class="docutils literal notranslate"><span class="pre">--help</span></code> will show you the default values
+when command line options aren’t used.</p>
+<p>Conventions - Sphinx-based document production usually uses two directories:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_docs</span></code> - the working directory where we put all the rST files
+from the various tools as we are building documents.
+This directory shoud not be checked in to version control
+and should only contain files created by a documentation run.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code> - the output directory for a documentation run.
+For example, this is where <code class="docutils literal notranslate"><span class="pre">index.html</span></code> is found
+when building HTML docs, etc.
+This directory should not be checked in to version control
+as it contains only derived and processed files.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic">
+<li><p>Convert feature files to rST;
+process all feature and document files
+in/under <code class="docutils literal notranslate"><span class="pre">feature/root/directory-here</span></code> into the <code class="docutils literal notranslate"><span class="pre">_docs</span></code> directory
+using all the defaults:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">gherkindoc</span> <span class="n">feature</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">directory</span><span class="o">-</span><span class="n">here</span> <span class="n">_docs</span>
+</pre></div>
+</div>
+</li>
+<li><p>Same as above,
+but also create a step glossary file <code class="docutils literal notranslate"><span class="pre">my_step_glossary</span></code> in <code class="docutils literal notranslate"><span class="pre">_docs</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">gherkindoc</span> <span class="o">-</span><span class="n">G</span> <span class="n">my_step_glossary</span> <span class="n">feature</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">directory</span><span class="o">-</span><span class="n">here</span> <span class="n">_docs</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>3. Experiment!
+Once you have the 2nd step working
+and integrated in to your document building process,
+you may find you want to tweak the results some.
+It’s a lot easier to do that <cite>after</cite> you have the basic process working.
+Experiment with the other optional parameters
+to get the effect(s) you want.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Rackspace Quality Engineering
+      
+        <span class="build">
+          Build
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/d9072481481430c7b9300c12ad5f1661b0c1de34">d9072481481430c7b9300c12ad5f1661b0c1de34</a>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sphinx_gherkindoc package &mdash; Sphinx - Gherkindoc 3.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Maintainer’s Documentation" href="MAINTAINER.html" />
+    <link rel="prev" title="sphinx-gherkindoc" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sphinx - Gherkindoc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Library</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sphinx_gherkindoc package</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Maintainers</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CONTRIBUTING.html#ways-to-contribute">Ways to Contribute</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#getting-started">Getting Started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#submitting-pull-requests">Submitting Pull Requests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="CONTRIBUTING.html#review-change-workflow">Review/Change Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="CONTRIBUTING.html#code-standards">Code Standards</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sphinx - Gherkindoc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>sphinx_gherkindoc package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sphinx_gherkindoc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sphinx_gherkindoc">
+<span id="sphinx-gherkindoc-package"></span><h1>sphinx_gherkindoc package<a class="headerlink" href="#module-sphinx_gherkindoc" title="Permalink to this headline">¶</a></h1>
+<p>Bring Gherkin Goodness into the Sphinx/reStructuredText (rST) world.</p>
+<dl class="class">
+<dt id="sphinx_gherkindoc.GlossaryEntry">
+<em class="property">class </em><code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">GlossaryEntry</code><a class="reference internal" href="_modules/sphinx_gherkindoc.html#GlossaryEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.GlossaryEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Track all the different places, and by which spellings, something is used.</p>
+<dl class="method">
+<dt id="sphinx_gherkindoc.GlossaryEntry.add_reference">
+<code class="sig-name descname">add_reference</code><span class="sig-paren">(</span><em class="sig-param">step_name</em>, <em class="sig-param">filename</em>, <em class="sig-param">line_number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#GlossaryEntry.add_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.GlossaryEntry.add_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a reference to the glossary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_name</strong> (<em>string</em>) – The step name in Gherkin</p></li>
+<li><p><strong>filename</strong> (<em>string</em>) – The file name containing the step</p></li>
+<li><p><strong>line_number</strong> (<em>integer</em>) – The line number containing the step</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sphinx_gherkindoc.GlossaryEntry.tuple_len">
+<code class="sig-name descname">tuple_len</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#GlossaryEntry.tuple_len"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.GlossaryEntry.tuple_len" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the length for each location and the number of associated steps.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sphinx_gherkindoc.SphinxWriter">
+<em class="property">class </em><code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">SphinxWriter</code><a class="reference internal" href="_modules/sphinx_gherkindoc.html#SphinxWriter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Easy Sphinx-format file creator.</p>
+<dl class="method">
+<dt id="sphinx_gherkindoc.SphinxWriter.add_output">
+<code class="sig-name descname">add_output</code><span class="sig-paren">(</span><em class="sig-param">line</em>, <em class="sig-param">line_breaks=1</em>, <em class="sig-param">indent_by=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#SphinxWriter.add_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter.add_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add output to be written to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line</strong> (<em>string</em>) – The line to be written</p></li>
+<li><p><strong>line_breaks</strong> (<em>integer</em><em>, </em><em>optional</em>) – The number of line breaks to include</p></li>
+<li><p><strong>indenty_by</strong> (<em>integer</em><em>, </em><em>optional</em>) – The number of spaces to indent the line.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sphinx_gherkindoc.SphinxWriter.blank_line">
+<code class="sig-name descname">blank_line</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#SphinxWriter.blank_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter.blank_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a single blank line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sphinx_gherkindoc.SphinxWriter.create_section">
+<code class="sig-name descname">create_section</code><span class="sig-paren">(</span><em class="sig-param">level</em>, <em class="sig-param">section</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#SphinxWriter.create_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter.create_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a section of &lt;level&gt; (1-10 supported).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sphinx_gherkindoc.SphinxWriter.sections">
+<code class="sig-name descname">sections</code><em class="property"> = ['', '=', '-', '~', '.', '*', '+', '_', '&lt;', '&gt;', '/']</em><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter.sections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sphinx_gherkindoc.SphinxWriter.write_to_file">
+<code class="sig-name descname">write_to_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#SphinxWriter.write_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.SphinxWriter.write_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the provided output to the given filename.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.config">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emit a customized version of the sample sphinx config file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.feature_to_rst">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">feature_to_rst</code><span class="sig-paren">(</span><em class="sig-param">source_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#feature_to_rst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.feature_to_rst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a SphinxWriter containing the rST for the given feature file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.is_excluded">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">is_excluded</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">exclude_pattern_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#is_excluded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.is_excluded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the given filename should be excluded, based on the pattern list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.is_feature_file">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">is_feature_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#is_feature_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.is_feature_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the given filename is a feature file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.is_rst_file">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">is_rst_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#is_rst_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.is_rst_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the given filename is a rST file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.is_wanted_file">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">is_wanted_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#is_wanted_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.is_wanted_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wanted as in: We know how to process it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.main">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a directory-tree of Gherking Feature files to rST files.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.make_flat_name">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">make_flat_name</code><span class="sig-paren">(</span><em class="sig-param">path_list</em>, <em class="sig-param">filename_root=None</em>, <em class="sig-param">is_dir=False</em>, <em class="sig-param">ext='.rst'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#make_flat_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.make_flat_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flatten file name from a list of directories and an optional filename.</p>
+<p>As per notes above, this will give us a non-nested directory structure.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.make_steps_glossary">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">make_steps_glossary</code><span class="sig-paren">(</span><em class="sig-param">project_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#make_steps_glossary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.make_steps_glossary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return SphinxWriter containing the step glossary information, if any.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.not_hidden">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">not_hidden</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#not_hidden"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.not_hidden" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the filename is not hidden.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.not_private">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">not_private</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#not_private"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.not_private" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a filename is private (using underscore prefix).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.process_args">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">process_args</code><span class="sig-paren">(</span><em class="sig-param">args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#process_args"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.process_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the supplied CLI args.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.rst_escape">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">rst_escape</code><span class="sig-paren">(</span><em class="sig-param">unescaped</em>, <em class="sig-param">slash_escape=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#rst_escape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.rst_escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escape reST-ful characters to prevent parsing errors.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.scan_tree">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">scan_tree</code><span class="sig-paren">(</span><em class="sig-param">starting_point</em>, <em class="sig-param">private</em>, <em class="sig-param">exclude_patterns</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#scan_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.scan_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of entities to proces, in top-down orders.</p>
+<p>the list can easily be processed with <cite>.pop</cite> to get a bottom-up
+directory ordering.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.toctree">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">toctree</code><span class="sig-paren">(</span><em class="sig-param">path_list</em>, <em class="sig-param">subdirs</em>, <em class="sig-param">files</em>, <em class="sig-param">maxtocdepth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#toctree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.toctree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a SphinxWriter for one level of a directory tree.</p>
+<p>Any rST files found at this level will have their content
+included in the TOC file instead of being referenced.
+This allows us to put content in the TOC file directly.
+The rST files that are included are expected to contain proper headers as well as
+content.
+If no rST files are included, a header is created using display_name from
+qecommon_tools.</p>
+<dl class="simple">
+<dt>NOTE: If there is more than one rST file present,</dt><dd><p>the order of their inclusion in the TOC is by filename sort order.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.verbose">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">verbose</code><span class="sig-paren">(</span><em class="sig-param">message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#verbose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print message only if VERBOSE, with a DRY_RUN prefix as appropriate.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sphinx_gherkindoc.wanted_source_files">
+<code class="sig-prename descclassname">sphinx_gherkindoc.</code><code class="sig-name descname">wanted_source_files</code><span class="sig-paren">(</span><em class="sig-param">files</em>, <em class="sig-param">exclude_pattern_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc.html#wanted_source_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.wanted_source_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of wanted sorce files, excluding unwanted files.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="MAINTAINER.html" class="btn btn-neutral float-right" title="Maintainer’s Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="sphinx-gherkindoc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Rackspace Quality Engineering
+      
+        <span class="build">
+          Build
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/d9072481481430c7b9300c12ad5f1661b0c1de34">d9072481481430c7b9300c12ad5f1661b0c1de34</a>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

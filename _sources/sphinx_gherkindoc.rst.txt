@@ -1,0 +1,7 @@
+sphinx\_gherkindoc package
+==========================
+
+.. automodule:: sphinx_gherkindoc
+   :members:
+   :undoc-members:
+   :show-inheritance:
