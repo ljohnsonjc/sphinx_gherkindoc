@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc &mdash; Sphinx - Gherkindoc 3.0.0 documentation</title>
+  <title>sphinx_gherkindoc &mdash; Sphinx - Gherkindoc 3.0.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.0.0
+                3.0.1
               </div>
             
           
@@ -384,7 +384,7 @@
 
 <span class="c1"># Simplified this from a class, for various reasons.</span>
 <span class="c1"># Additional simplification work is needed!!!!</span>
-<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../sphinx_gherkindoc.html#sphinx_gherkindoc.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">):</span>
+<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../sphinx_gherkindoc.html#sphinx_gherkindoc.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return a SphinxWriter containing the rST for the given feature file.&quot;&quot;&quot;</span>
     <span class="n">output_file</span> <span class="o">=</span> <span class="n">SphinxWriter</span><span class="p">()</span>
 
@@ -444,7 +444,7 @@
     <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
             <span class="n">step_glossary</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span><span class="o">.</span><span class="n">add_reference</span><span class="p">(</span>
-                <span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">step</span><span class="o">.</span><span class="n">line</span>
+                <span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_path</span><span class="p">),</span> <span class="n">step</span><span class="o">.</span><span class="n">line</span>
             <span class="p">)</span>
             <span class="n">bold_step</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(</span><span class="se">\\</span><span class="s2">\&lt;.*?\&gt;)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;**\1**&quot;</span><span class="p">,</span> <span class="n">rst_escape</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
             <span class="n">output_file</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;- </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">keyword</span><span class="p">,</span> <span class="n">bold_step</span><span class="p">))</span>
@@ -522,7 +522,7 @@
 <span class="c1">#   either empty or have empty children.</span>
 
 
-<div class="viewcode-block" id="toctree"><a class="viewcode-back" href="../sphinx_gherkindoc.html#sphinx_gherkindoc.toctree">[docs]</a><span class="k">def</span> <span class="nf">toctree</span><span class="p">(</span><span class="n">path_list</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">):</span>
+<div class="viewcode-block" id="toctree"><a class="viewcode-back" href="../sphinx_gherkindoc.html#sphinx_gherkindoc.toctree">[docs]</a><span class="k">def</span> <span class="nf">toctree</span><span class="p">(</span><span class="n">path_list</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">,</span> <span class="n">root_path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a SphinxWriter for one level of a directory tree.</span>
 
@@ -549,13 +549,14 @@
 
         <span class="n">source_name_list</span> <span class="o">=</span> <span class="n">path_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">a_file</span><span class="p">]</span>
         <span class="n">source_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">source_name_list</span><span class="p">)</span>
+        <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
         <span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Copying content from: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">))</span>
-        <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">get_file_contents</span><span class="p">(</span><span class="n">source_name</span><span class="p">),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">get_file_contents</span><span class="p">(</span><span class="n">source_path</span><span class="p">),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">need_header</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">need_header</span><span class="p">:</span>
         <span class="c1"># We&#39;re just adding a boiler plate heading.</span>
-        <span class="n">temp_path_list</span> <span class="o">=</span> <span class="n">path_list</span> <span class="ow">or</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">]</span>
+        <span class="n">temp_path_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">root_path</span><span class="p">]</span> <span class="o">+</span> <span class="n">path_list</span> <span class="k">if</span> <span class="n">path_list</span> <span class="k">else</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">]</span>
         <span class="n">of</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">display_name</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">temp_path_list</span><span class="p">)))</span>
 
     <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s2">&quot;.. toctree::&quot;</span><span class="p">)</span>
@@ -586,12 +587,13 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">me</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">osutil</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">starting_point</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">me</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">starting_point</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">is_excluded</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">):</span>
             <span class="n">dirs</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">continue</span>
 
-        <span class="n">me_list</span> <span class="o">=</span> <span class="n">me</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+        <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">starting_point</span><span class="p">)</span>
+        <span class="n">me_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
 
         <span class="c1"># This prevents creating &quot;dot&quot; files in the output directory, which can be very</span>
         <span class="c1"># confusing.</span>
@@ -620,6 +622,7 @@
     <span class="n">toc_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">toc_name</span>
     <span class="n">step_glossary_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">step_glossary_name</span>
     <span class="n">doc_project</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span>
+    <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">))</span>
 
     <span class="n">top_level_toc_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">toc_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span>
 
@@ -641,7 +644,7 @@
         <span class="k">if</span> <span class="n">DRY_RUN</span><span class="p">:</span>
             <span class="k">continue</span>
 
-        <span class="n">toc_file</span> <span class="o">=</span> <span class="n">toctree</span><span class="p">(</span><span class="n">a_dir_list</span><span class="p">,</span> <span class="n">new_subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">)</span>
+        <span class="n">toc_file</span> <span class="o">=</span> <span class="n">toctree</span><span class="p">(</span><span class="n">a_dir_list</span><span class="p">,</span> <span class="n">new_subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">,</span> <span class="n">root_path</span><span class="p">)</span>
         <span class="c1"># Check to see if we are at the last item to be processed</span>
         <span class="c1"># (which has already been popped)</span>
         <span class="c1"># to write the asked for master TOC file name.</span>
@@ -656,11 +659,12 @@
         <span class="k">for</span> <span class="n">a_file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
             <span class="n">a_file_list</span> <span class="o">=</span> <span class="n">a_dir_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">a_file</span><span class="p">]</span>
             <span class="n">source_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">a_file_list</span><span class="p">)</span>
+            <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">is_feature_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
                 <span class="n">dest_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                     <span class="n">output_path</span><span class="p">,</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="p">)</span>
-                <span class="n">feature_rst_file</span> <span class="o">=</span> <span class="n">feature_to_rst</span><span class="p">(</span><span class="n">source_name</span><span class="p">)</span>
+                <span class="n">feature_rst_file</span> <span class="o">=</span> <span class="n">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">)</span>
                 <span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;converting &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">))</span>
                 <span class="n">feature_rst_file</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">dest_name</span><span class="p">)</span>
             <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_rst_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
@@ -668,7 +672,7 @@
                     <span class="n">output_path</span><span class="p">,</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
                 <span class="p">)</span>
                 <span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;copying &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">))</span>
-                <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">step_glossary_name</span><span class="p">:</span>
         <span class="n">glossary_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
@@ -826,7 +830,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/998ba5caff9bdeb73a5c699a2bfabeb113bc0212">998ba5caff9bdeb73a5c699a2bfabeb113bc0212</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/b56361529c5435bbd84cfe4c88f4a35cead38bd1">b56361529c5435bbd84cfe4c88f4a35cead38bd1</a>.
         </span>
       
 
