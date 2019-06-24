@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.writer &mdash; Sphinx - Gherkindoc 3.1.0 documentation</title>
+  <title>sphinx_gherkindoc.writer &mdash; Sphinx - Gherkindoc 3.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.0
+                3.1.1
               </div>
             
           
@@ -181,8 +181,11 @@
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">behave.parser</span>
+<span class="kn">import</span> <span class="nn">behave.model</span>
+<span class="kn">import</span> <span class="nn">behave.model_core</span>
 <span class="kn">from</span> <span class="nn">qecommon_tools</span> <span class="k">import</span> <span class="n">display_name</span><span class="p">,</span> <span class="n">get_file_contents</span><span class="p">,</span> <span class="n">list_from</span><span class="p">,</span> <span class="n">url_if_ticket</span>
 
 <span class="kn">from</span> <span class="nn">.files</span> <span class="k">import</span> <span class="n">is_rst_file</span>
@@ -210,7 +213,13 @@
 <span class="c1">#   either empty or have empty children.</span>
 
 
-<div class="viewcode-block" id="toctree"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.toctree">[docs]</a><span class="k">def</span> <span class="nf">toctree</span><span class="p">(</span><span class="n">path_list</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">,</span> <span class="n">root_path</span><span class="p">):</span>
+<div class="viewcode-block" id="toctree"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.toctree">[docs]</a><span class="k">def</span> <span class="nf">toctree</span><span class="p">(</span>
+    <span class="n">path_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">subdirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">maxtocdepth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SphinxWriter</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a SphinxWriter for one level of a directory tree.</span>
 
@@ -254,7 +263,7 @@
 
     <span class="k">for</span> <span class="n">a_file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">non_included_files</span><span class="p">):</span>
         <span class="c1"># For MarkDown file content to be properly processed we</span>
-        <span class="c1"># need toleave the file name extension unchanged.</span>
+        <span class="c1"># need to leave the file name extension unchanged.</span>
         <span class="n">ext</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">a_file</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.md&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">path_list</span><span class="p">,</span> <span class="n">filename_root</span><span class="o">=</span><span class="n">a_file</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="n">ext</span><span class="p">)</span>
         <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">indent_by</span><span class="o">=</span><span class="n">INDENT_DEPTH</span><span class="p">)</span>
@@ -268,15 +277,15 @@
 
 <span class="c1"># Simplified this from a class, for various reasons.</span>
 <span class="c1"># Additional simplification work is needed!!!!</span>
-<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">):</span>
+<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SphinxWriter</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Return a SphinxWriter containing the rST for the given feature file.&quot;&quot;&quot;</span>
     <span class="n">output_file</span> <span class="o">=</span> <span class="n">SphinxWriter</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="n">level</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">behave</span><span class="o">.</span><span class="n">model_core</span><span class="o">.</span><span class="n">BasicStatement</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">section_name</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">keyword</span><span class="p">,</span> <span class="n">rst_escape</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         <span class="n">output_file</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">section_name</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;: &quot;</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="n">description</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">description</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">list_from</span><span class="p">(</span><span class="n">description</span><span class="p">):</span>
@@ -286,7 +295,7 @@
             <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span> <span class="ow">or</span> <span class="n">line</span> <span class="o">==</span> <span class="n">description</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
                 <span class="n">output_file</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">output_file</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
@@ -301,7 +310,7 @@
 
     <span class="c1"># Reference link here because it&#39;s too long to put inside the function itself.</span>
     <span class="c1"># http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#embedded-uris-and-aliases</span>
-    <span class="k">def</span> <span class="nf">ticket_url_or_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ticket_url_or_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Get a URL or tag.</span>
 
 <span class="sd">        If tag is a ticket, return an anonymous embedded hyperlink for it,</span>
@@ -312,7 +321,7 @@
             <span class="k">return</span> <span class="s2">&quot;`</span><span class="si">{}</span><span class="s2"> &lt;</span><span class="si">{}</span><span class="s2">&gt;`__&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tag</span>
 
-    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="n">tags</span><span class="p">,</span> <span class="o">*</span><span class="n">parent_objs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="n">tags</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">*</span><span class="n">parent_objs</span><span class="p">:</span> <span class="n">behave</span><span class="o">.</span><span class="n">model_core</span><span class="o">.</span><span class="n">BasicStatement</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">parent_with_tags</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parent_objs</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">tags</span> <span class="ow">or</span> <span class="n">parent_with_tags</span><span class="p">):</span>
             <span class="k">return</span>
@@ -325,7 +334,7 @@
             <span class="sa">u</span><span class="s2">&quot;Tagged: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag_str</span><span class="o">.</span><span class="n">strip</span><span class="p">()),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">indent_by</span><span class="o">=</span><span class="n">INDENT_DEPTH</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">behave</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Step</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
             <span class="n">step_glossary</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span><span class="o">.</span><span class="n">add_reference</span><span class="p">(</span>
                 <span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_path</span><span class="p">),</span> <span class="n">step</span><span class="o">.</span><span class="n">line</span>
@@ -339,14 +348,16 @@
                 <span class="n">text</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="n">output_file</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">examples</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="n">feature</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">examples</span><span class="p">(</span>
+        <span class="n">scenario</span><span class="p">:</span> <span class="n">behave</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Scenario</span><span class="p">,</span> <span class="n">feature</span><span class="p">:</span> <span class="n">behave</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Feature</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">scenario</span><span class="p">,</span> <span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="p">[]):</span>
             <span class="n">section</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
             <span class="n">tags</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">tags</span><span class="p">,</span> <span class="n">scenario</span><span class="p">,</span> <span class="n">feature</span><span class="p">)</span>
             <span class="n">table</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
             <span class="n">output_file</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">table</span><span class="p">(</span><span class="n">table</span><span class="p">:</span> <span class="n">behave</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Table</span><span class="p">,</span> <span class="n">inline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">indent_by</span> <span class="o">=</span> <span class="n">INDENT_DEPTH</span> <span class="k">if</span> <span class="n">inline</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="n">directive</span> <span class="o">=</span> <span class="s2">&quot;.. csv-table::&quot;</span>
         <span class="n">output_file</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">directive</span><span class="p">,</span> <span class="n">indent_by</span><span class="o">=</span><span class="n">indent_by</span><span class="p">)</span>
@@ -390,7 +401,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ea2fa4c3a719f8c8c8d72446abe2196d5c004587">ea2fa4c3a719f8c8c8d72446abe2196d5c004587</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/834efba0f8697f39a148412aeeb118d5236defd3">834efba0f8697f39a148412aeeb118d5236defd3</a>.
         </span>
       
 

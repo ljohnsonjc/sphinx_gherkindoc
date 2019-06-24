@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.glossary &mdash; Sphinx - Gherkindoc 3.1.0 documentation</title>
+  <title>sphinx_gherkindoc.glossary &mdash; Sphinx - Gherkindoc 3.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.0
+                3.1.1
               </div>
             
           
@@ -179,6 +179,7 @@
   <h1>Source code for sphinx_gherkindoc.glossary</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Module specific to building the steps glossary.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">DefaultDict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">INDENT_DEPTH</span><span class="p">,</span> <span class="n">rst_escape</span><span class="p">,</span> <span class="n">SphinxWriter</span>
 
@@ -186,54 +187,54 @@
 <div class="viewcode-block" id="GlossaryEntry"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.GlossaryEntry">[docs]</a><span class="k">class</span> <span class="nc">GlossaryEntry</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Track all the different places, and by which spellings, something is used.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">step_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_set</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">:</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
-<div class="viewcode-block" id="GlossaryEntry.add_reference"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.GlossaryEntry.add_reference">[docs]</a>    <span class="k">def</span> <span class="nf">add_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">line_number</span><span class="p">):</span>
+<div class="viewcode-block" id="GlossaryEntry.add_reference"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.GlossaryEntry.add_reference">[docs]</a>    <span class="k">def</span> <span class="nf">add_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add a reference to the glossary.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            step_name (string): The step name in Gherkin</span>
-<span class="sd">            filename (string): The file name containing the step</span>
-<span class="sd">            line_number (integer): The line number containing the step</span>
+<span class="sd">            step_name: The step name in Gherkin</span>
+<span class="sd">            filename: The file name containing the step</span>
+<span class="sd">            line_number: The line number containing the step</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">step_set</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">step_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_number</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="GlossaryEntry.tuple_len"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.GlossaryEntry.tuple_len">[docs]</a>    <span class="k">def</span> <span class="nf">tuple_len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="GlossaryEntry.tuple_len"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.GlossaryEntry.tuple_len">[docs]</a>    <span class="k">def</span> <span class="nf">tuple_len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Get the length for each location and the number of associated steps.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span></div>
 
-    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Compare the location and step lenghts for the larger one.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tuple_len</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">tuple_len</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Compare the location and step lengths for equality.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tuple_len</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">tuple_len</span><span class="p">()</span></div>
 
 
-<span class="n">step_glossary</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">GlossaryEntry</span><span class="p">)</span>
+<span class="n">step_glossary</span><span class="p">:</span> <span class="n">DefaultDict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">GlossaryEntry</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">GlossaryEntry</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="make_steps_glossary"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.make_steps_glossary">[docs]</a><span class="k">def</span> <span class="nf">make_steps_glossary</span><span class="p">(</span><span class="n">project_name</span><span class="p">):</span>
+<div class="viewcode-block" id="make_steps_glossary"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.glossary.make_steps_glossary">[docs]</a><span class="k">def</span> <span class="nf">make_steps_glossary</span><span class="p">(</span><span class="n">project_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SphinxWriter</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Return SphinxWriter containing the step glossary information, if any.&quot;&quot;&quot;</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">step_glossary</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="n">glossary</span> <span class="o">=</span> <span class="n">SphinxWriter</span><span class="p">()</span>
-    <span class="n">glossary</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="sa">u</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> Glossary&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_name</span><span class="p">))</span>
+    <span class="n">glossary</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> Glossary&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">project_name</span><span class="p">))</span>
 
     <span class="n">master_step_names</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">name</span> <span class="k">for</span> <span class="n">gloss</span> <span class="ow">in</span> <span class="n">step_glossary</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">gloss</span><span class="o">.</span><span class="n">step_set</span>
     <span class="p">}</span>
     <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">master_step_names</span><span class="p">):</span>
-        <span class="n">glossary</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;- :term:`</span><span class="si">{}</span><span class="s2">`&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rst_escape</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">slash_escape</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+        <span class="n">glossary</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s2">&quot;- :term:`</span><span class="si">{}</span><span class="s2">`&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rst_escape</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">slash_escape</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
 
     <span class="n">glossary</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
     <span class="n">glossary</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s2">&quot;.. glossary::&quot;</span><span class="p">)</span>
@@ -244,8 +245,7 @@
             <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">location</span><span class="p">,</span> <span class="n">line_numbers</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">locations</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">line_numbers</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">line_numbers</span><span class="p">)</span>
-            <span class="n">definition</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;| </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line_numbers</span><span class="p">))</span>
+            <span class="n">definition</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;| </span><span class="si">{location}</span><span class="s2"> {&#39;, &#39;.join(map(str, line_numbers))}&quot;</span>
             <span class="n">glossary</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">definition</span><span class="p">,</span> <span class="n">indent_by</span><span class="o">=</span><span class="n">INDENT_DEPTH</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">glossary</span><span class="o">.</span><span class="n">blank_line</span><span class="p">()</span>
 
@@ -266,7 +266,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ea2fa4c3a719f8c8c8d72446abe2196d5c004587">ea2fa4c3a719f8c8c8d72446abe2196d5c004587</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/834efba0f8697f39a148412aeeb118d5236defd3">834efba0f8697f39a148412aeeb118d5236defd3</a>.
         </span>
       
 

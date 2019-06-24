@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.utils &mdash; Sphinx - Gherkindoc 3.1.0 documentation</title>
+  <title>sphinx_gherkindoc.utils &mdash; Sphinx - Gherkindoc 3.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.0
+                3.1.1
               </div>
             
           
@@ -178,6 +178,8 @@
             
   <h1>Source code for sphinx_gherkindoc.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic utils used throughout the module.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
 <span class="kn">import</span> <span class="nn">sphinx.util</span>
 
 <span class="c1"># Increments of how much we indent Sphinx rST content when indenting.</span>
@@ -192,7 +194,7 @@
 <span class="n">VERBOSE</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="verbose"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.verbose">[docs]</a><span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+<div class="viewcode-block" id="verbose"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.verbose">[docs]</a><span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Print message only if VERBOSE, with a DRY_RUN prefix as appropriate.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">VERBOSE</span><span class="p">:</span>
         <span class="k">return</span>
@@ -201,13 +203,13 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="set_dry_run"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.set_dry_run">[docs]</a><span class="k">def</span> <span class="nf">set_dry_run</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="set_dry_run"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.set_dry_run">[docs]</a><span class="k">def</span> <span class="nf">set_dry_run</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Set the value for DRY_RUN outside this module.&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">DRY_RUN</span>
     <span class="n">DRY_RUN</span> <span class="o">=</span> <span class="n">value</span></div>
 
 
-<div class="viewcode-block" id="set_verbose"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.set_verbose">[docs]</a><span class="k">def</span> <span class="nf">set_verbose</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="set_verbose"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.set_verbose">[docs]</a><span class="k">def</span> <span class="nf">set_verbose</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Set the value for VERBOSE outside this module.&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">VERBOSE</span>
     <span class="n">VERBOSE</span> <span class="o">=</span> <span class="n">value</span></div>
@@ -219,18 +221,41 @@
 <span class="n">_advanced_escape_mappings</span><span class="p">[</span><span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&quot;</span><span class="se">\\\\\\</span><span class="s2">&quot;</span>
 
 
-<div class="viewcode-block" id="rst_escape"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.rst_escape">[docs]</a><span class="k">def</span> <span class="nf">rst_escape</span><span class="p">(</span><span class="n">unescaped</span><span class="p">,</span> <span class="n">slash_escape</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Escape reST-ful characters to prevent parsing errors.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="rst_escape"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.rst_escape">[docs]</a><span class="k">def</span> <span class="nf">rst_escape</span><span class="p">(</span><span class="n">unescaped</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">slash_escape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Escape reST-ful characters to prevent parsing errors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        unescaped: A string that potentially contains characters needing escaping</span>
+<span class="sd">        slash_escape: if True, escape slashes found in ``unescaped``</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A string which has reST-ful characters appropriately escaped</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">unescaped</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span>
         <span class="n">_advanced_escape_mappings</span> <span class="k">if</span> <span class="n">slash_escape</span> <span class="k">else</span> <span class="n">_escape_mappings</span>
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_flat_name"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.make_flat_name">[docs]</a><span class="k">def</span> <span class="nf">make_flat_name</span><span class="p">(</span><span class="n">path_list</span><span class="p">,</span> <span class="n">filename_root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;.rst&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="make_flat_name"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.make_flat_name">[docs]</a><span class="k">def</span> <span class="nf">make_flat_name</span><span class="p">(</span>
+    <span class="n">path_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">filename_root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">is_dir</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">ext</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.rst&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Flatten file name from a list of directories and an optional filename.</span>
+<span class="sd">    Build a flat file name from the provided information.</span>
 
-<span class="sd">    As per notes above, this will give us a non-nested directory structure.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        path_list: Directory hierarchy to flatten</span>
+<span class="sd">        filename_root: If provided, the root of the filename to flatten (no extension)</span>
+<span class="sd">        is_dir: If True, mark the new filename as a table of contents</span>
+<span class="sd">        ext: Optional extension for the new file name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A filename containing the full path, separated by periods</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">filename_root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">path_list</span> <span class="o">=</span> <span class="n">path_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">filename_root</span><span class="p">]</span>
@@ -245,31 +270,40 @@
 
     <span class="n">sections</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;~&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="SphinxWriter.add_output"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.add_output">[docs]</a>    <span class="k">def</span> <span class="nf">add_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">indent_by</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="SphinxWriter.add_output"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.add_output">[docs]</a>    <span class="k">def</span> <span class="nf">add_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">line_breaks</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">indent_by</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Add output to be written to file.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            line (string): The line to be written</span>
-<span class="sd">            line_breaks(integer, optional): The number of line breaks to include</span>
-<span class="sd">            indenty_by(integer, optional): The number of spaces to indent the line.</span>
-
+<span class="sd">            line: The line to be written</span>
+<span class="sd">            line_breaks: The number of line breaks to include</span>
+<span class="sd">            indenty_by: The number of spaces to indent the line.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;</span><span class="si">{}{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">indent_by</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="n">line_breaks</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="SphinxWriter.blank_line"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.blank_line">[docs]</a>    <span class="k">def</span> <span class="nf">blank_line</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SphinxWriter.blank_line"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.blank_line">[docs]</a>    <span class="k">def</span> <span class="nf">blank_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Write a single blank line.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SphinxWriter.create_section"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.create_section">[docs]</a>    <span class="k">def</span> <span class="nf">create_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a section of &lt;level&gt; (1-10 supported).&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SphinxWriter.create_section"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.create_section">[docs]</a>    <span class="k">def</span> <span class="nf">create_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">section</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a reST-formatted section header based on the provided level.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            level: The level depth of the section header (1-10 supported)</span>
+<span class="sd">            section: The section title</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SphinxWriter.write_to_file"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.write_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Write the provided output to the given filename.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SphinxWriter.write_to_file"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.write_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Write the provided output to the given filename.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename: The full path to write the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Writing </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
         <span class="k">with</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">osutil</span><span class="o">.</span><span class="n">FileAvoidWrite</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="c1"># All version of Sphinx will accept a string-type,</span>
@@ -296,7 +330,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ea2fa4c3a719f8c8c8d72446abe2196d5c004587">ea2fa4c3a719f8c8c8d72446abe2196d5c004587</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/834efba0f8697f39a148412aeeb118d5236defd3">834efba0f8697f39a148412aeeb118d5236defd3</a>.
         </span>
       
 

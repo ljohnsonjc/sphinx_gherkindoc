@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.cli &mdash; Sphinx - Gherkindoc 3.1.0 documentation</title>
+  <title>sphinx_gherkindoc.cli &mdash; Sphinx - Gherkindoc 3.1.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.0
+                3.1.1
               </div>
             
           
@@ -182,6 +182,7 @@
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Set</span>
 
 <span class="kn">import</span> <span class="nn">sphinx</span>
 <span class="kn">from</span> <span class="nn">qecommon_tools</span> <span class="k">import</span> <span class="n">get_file_contents</span>
@@ -196,7 +197,7 @@
 <span class="n">DEFAULT_TOC_DEPTH</span> <span class="o">=</span> <span class="mi">4</span>
 
 
-<div class="viewcode-block" id="process_args"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.process_args">[docs]</a><span class="k">def</span> <span class="nf">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="process_args"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.process_args">[docs]</a><span class="k">def</span> <span class="nf">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Process the supplied CLI args.&quot;&quot;&quot;</span>
     <span class="n">work_to_do</span> <span class="o">=</span> <span class="n">scan_tree</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">exclude_patterns</span><span class="p">)</span>
     <span class="n">maxtocdepth</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">maxtocdepth</span>
@@ -208,7 +209,7 @@
 
     <span class="n">top_level_toc_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">toc_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span>
 
-    <span class="n">non_empty_dirs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">non_empty_dirs</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
     <span class="k">while</span> <span class="n">work_to_do</span><span class="p">:</span>
         <span class="n">a_dir</span><span class="p">,</span> <span class="n">a_dir_list</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="o">=</span> <span class="n">work_to_do</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
@@ -274,7 +275,7 @@
         <span class="n">glossary</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">glossary_filename</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Convert a directory-tree of Gherkin Feature files to rST files.&quot;&quot;&quot;</span>
     <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;Look recursively in &lt;gherkin_path&gt; for Gherkin files and create one &quot;</span>
@@ -356,7 +357,7 @@
     <span class="n">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="config"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.config">[docs]</a><span class="k">def</span> <span class="nf">config</span><span class="p">():</span>
+<div class="viewcode-block" id="config"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.config">[docs]</a><span class="k">def</span> <span class="nf">config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Emit a customized version of the sample sphinx config file.&quot;&quot;&quot;</span>
     <span class="n">description</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;Create a default Sphinx configuration for producing nice&quot;</span>
@@ -407,7 +408,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ea2fa4c3a719f8c8c8d72446abe2196d5c004587">ea2fa4c3a719f8c8c8d72446abe2196d5c004587</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/834efba0f8697f39a148412aeeb118d5236defd3">834efba0f8697f39a148412aeeb118d5236defd3</a>.
         </span>
       
 
