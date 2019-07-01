@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contributing &mdash; Sphinx - Gherkindoc 3.1.1 documentation</title>
+  <title>Contributors &mdash; sphinx-gherkindoc 3.1.1 documentation</title>
   
 
   
@@ -50,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> Sphinx - Gherkindoc
+            <a href="index.html" class="icon icon-home"> sphinx-gherkindoc
           
 
           
@@ -103,18 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ways-to-contribute">Ways to Contribute</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#submitting-pull-requests">Submitting Pull Requests</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#review-change-workflow">Review/Change Workflow</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#code-standards">Code Standards</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributors</a></li>
 </ul>
 
             
@@ -129,7 +118,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Sphinx - Gherkindoc</a>
+          <a href="index.html">sphinx-gherkindoc</a>
         
       </nav>
 
@@ -160,13 +149,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Contributing</li>
+      <li>Contributors</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/CONTRIBUTING.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/CONTRIBUTORS.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -179,100 +168,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="contributing">
-<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
-<p>Thank you for your interest in QE Tools! The following is a set of guidelines
-for contributing to this project:</p>
-<p>We use the <a class="reference external" href="https://pages.github.rackspace.com/QualityEngineering/QE-Tools/sdlcs/README.html">QE Tools SDLC Documentation</a> to define the formal SDLC process for
-the project.</p>
-<div class="section" id="ways-to-contribute">
-<h2>Ways to Contribute<a class="headerlink" href="#ways-to-contribute" title="Permalink to this headline">¶</a></h2>
-<p>If you find a bug or have an idea, <a class="reference external" href="https://jira.rax.io/projects/QET/">let us know</a>.
-We also welcome pull requests for documentation, typos, and even feature
-requests.</p>
-<div class="section" id="getting-started">
-<h3>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
-<p>After cloning this repo, simply run <code class="docutils literal notranslate"><span class="pre">env_setup.sh</span></code>
-to set up your virtual environment
-and prepare your pre-commit hooks.</p>
-</div>
-<div class="section" id="submitting-pull-requests">
-<h3>Submitting Pull Requests<a class="headerlink" href="#submitting-pull-requests" title="Permalink to this headline">¶</a></h3>
-<p>If you find an error in the documentation
-(or anywhere that it is completely lacking),
-please feel free to submit a PR to fix the error.
-Did you find a <strong>tpyo</strong>? Submit a PR to fix that, too!</p>
-<p>Feature implementations are also welcome,
-but we encourage you to come talk to us
-in the #metrics_qe_team Slack channel
-to prevent duplication of effort and discuss the feature
-<em>before</em> sinking too much work into it.</p>
-<div class="section" id="review-change-workflow">
-<h4>Review/Change Workflow<a class="headerlink" href="#review-change-workflow" title="Permalink to this headline">¶</a></h4>
+  <div class="section" id="contributors">
+<h1>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h1>
+<p>This package was the result of collaborative dissussion and effort between:</p>
 <ul class="simple">
-<li><p>When creating a pull request, set the Reviewers to
-“QE-Tools/qe-tools-contributors”.</p>
-<ul>
-<li><p>PRs previously discussed with a specific person
-may be assigned to them directly to start.</p></li>
+<li><p>Lewis Franklin <a class="reference external" href="https://github.com/brolewis/">&#64;brolewis</a></p></li>
+<li><p>Doug Philips <a class="reference external" href="https://github.com/dgou/">&#64;dgou</a></p></li>
+<li><p>Brad Brown <a class="reference external" href="https://github.com/bradsbrown/">&#64;bradsbrown</a></p></li>
 </ul>
-</li>
-<li><p>When starting to review a pull request,
-add the “In Review” label.</p>
-<ul>
-<li><p>This serves as a signal that the PR is already under review
-so that if someone else wants to review,
-they know to wait until all reviewers are finished reviewing.</p></li>
-</ul>
-</li>
-<li><p>Once a review is completed, remove the “In Review” label.</p>
-<ul>
-<li><p>If you are requesting changes,
-assign the PR to the author.</p></li>
-<li><p>If not requesting changes
-and you are the first reviewer,
-set the Reviewers to “QE-Tools/qe-tools-contributors”.</p></li>
-<li><p>If not requesting changes
-and you are the second reviewer,
-please merge the pull request.</p></li>
-</ul>
-</li>
-<li><p>As an author,
-once requested edits are completed,
-un-assign yourself
-and assign to the reviewer requesting the changes.</p>
-<ul>
-<li><p>Once assigned,
-a reviewer has 48 hours to respond to changes
-before the changes are considered approved.</p></li>
-<li><p>If the change is large enough
-and other individual(s) have already reviewed,
-you may re-assign to them and ask for an additional review,
-but it is not required.</p></li>
-</ul>
-</li>
-<li><p>Two approvals are preferred,
-but a single reviewer is acceptable.
-This is especially true for “trivial” pull requests such as fixing typos
-and “fast follow” PRs.</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="code-standards">
-<h3>Code Standards<a class="headerlink" href="#code-standards" title="Permalink to this headline">¶</a></h3>
+<p>Some notable contributions:</p>
 <ul class="simple">
-<li><p>The project is built using Python 3.6,
-so feel free to use any features available in this version.</p></li>
-<li><p>We use <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> to handle commit validation,
-with <code class="docutils literal notranslate"><span class="pre">black</span></code> for code formatting,
-and <code class="docutils literal notranslate"><span class="pre">flake8</span></code> for styling.</p></li>
-<li><p>You can manually run <code class="docutils literal notranslate"><span class="pre">self-check.py</span></code> any time to validate your changes
-against our checkers.</p></li>
-<li><p>Please include tests where appropriate.
-The coverage is lacking so any increase in coverage is appreciated.</p></li>
+<li><p>The initial code was done by Lewis Franklin <a class="reference external" href="https://github.com/brolewis/">&#64;brolewis</a></p></li>
+<li><p>The ability to emit a customized config file was done by Doug Philips
+<a class="reference external" href="https://github.com/dgou/">&#64;dgou</a></p></li>
+<li><p>Version 2 was done by Doug Philips <a class="reference external" href="https://github.com/dgou/">&#64;dgou</a></p></li>
+<li><p>Linking to known ticket types was done by Doug Philips <a class="reference external" href="https://github.com/dgou/">&#64;dgou</a></p></li>
+<li><p>Fixing file writes to work with Sphinx &gt;=2 was done by Brad Brown
+<a class="reference external" href="https://github.com/bradsbrown/">&#64;bradsbrown</a></p></li>
+<li><p>Conversion to Python 3.6+ and splitting into individual modules
+for publication was done by Lewis Franklin <a class="reference external" href="https://github.com/brolewis/">&#64;brolewis</a></p></li>
+<li><p>Self tests were added by Lewis Franklin <a class="reference external" href="https://github.com/brolewis/">&#64;brolewis</a></p></li>
 </ul>
-</div>
-</div>
 </div>
 
 
@@ -293,11 +209,11 @@ The coverage is lacking so any increase in coverage is appreciated.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Rackspace Quality Engineering
+        &copy; Copyright 2018, Lewis Franklin &amp; Doug Philips
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/f9a85f6549349df998e85746a0720bcb65ce7cd7">f9a85f6549349df998e85746a0720bcb65ce7cd7</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/e3c1fb2f728bb023e762ed774061a5f61d75b007">e3c1fb2f728bb023e762ed774061a5f61d75b007</a>.
         </span>
       
 
