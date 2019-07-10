@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.cli &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
+  <title>sphinx_gherkindoc.cli &mdash; sphinx-gherkindoc 3.2.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.2
+                3.2.0
               </div>
             
           
@@ -174,7 +174,6 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Set</span>
 
 <span class="kn">import</span> <span class="nn">sphinx</span>
-<span class="kn">from</span> <span class="nn">qecommon_tools</span> <span class="k">import</span> <span class="n">get_file_contents</span>
 
 <span class="kn">from</span> <span class="nn">.files</span> <span class="k">import</span> <span class="n">is_feature_file</span><span class="p">,</span> <span class="n">is_rst_file</span><span class="p">,</span> <span class="n">scan_tree</span>
 <span class="kn">from</span> <span class="nn">.glossary</span> <span class="k">import</span> <span class="n">make_steps_glossary</span>
@@ -238,7 +237,9 @@
             <span class="n">source_path</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">/</span> <span class="n">source_name</span>
             <span class="k">if</span> <span class="n">is_feature_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
                 <span class="n">dest_name</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                <span class="n">feature_rst_file</span> <span class="o">=</span> <span class="n">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">)</span>
+                <span class="n">feature_rst_file</span> <span class="o">=</span> <span class="n">feature_to_rst</span><span class="p">(</span>
+                    <span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">url_from_tag</span>
+                <span class="p">)</span>
                 <span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;converting &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">))</span>
                 <span class="n">feature_rst_file</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">dest_name</span><span class="p">)</span>
             <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_rst_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
@@ -320,6 +321,12 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Show version information and exit&quot;</span>
     <span class="p">)</span>
+    <span class="n">url_help</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;A library and method name to call to build a URL from a tag. The string&quot;</span>
+        <span class="s2">&quot; should be &lt;library&gt;:&lt;method_name&gt; and it should accept a single string&quot;</span>
+        <span class="s2">&quot; parameter, the tag.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--url-from-tag&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="n">url_help</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
@@ -373,7 +380,8 @@
         <span class="s2">&quot;</span><span class="si">%%</span><span class="s2">RELEASE</span><span class="si">%%</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">release</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">source_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
-    <span class="n">sample_contents</span> <span class="o">=</span> <span class="n">get_file_contents</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="s2">&quot;sample-conf.py&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">source_dir</span> <span class="o">/</span> <span class="s2">&quot;sample-conf.py&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">conf_fo</span><span class="p">:</span>
+        <span class="n">sample_contents</span> <span class="o">=</span> <span class="n">conf_fo</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">new_value</span> <span class="ow">in</span> <span class="n">substitutions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">sample_contents</span> <span class="o">=</span> <span class="n">sample_contents</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old_value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
 
@@ -398,7 +406,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ae379aacfd90600e45fbae1833d075485ba2faf2">ae379aacfd90600e45fbae1833d075485ba2faf2</a>.
         </span>
       
 

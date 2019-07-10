@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.utils &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
+  <title>sphinx_gherkindoc.utils &mdash; sphinx-gherkindoc 3.2.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.2
+                3.2.0
               </div>
             
           
@@ -168,6 +168,7 @@
   <h1>Source code for sphinx_gherkindoc.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic utils used throughout the module.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">sphinx.util</span>
@@ -304,6 +305,30 @@
                 <span class="c1"># py2 unicode needs to be encoded first</span>
                 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="display_name"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.display_name">[docs]</a><span class="k">def</span> <span class="nf">display_name</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">package_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a human-readable name for a given project.</span>
+
+<span class="sd">    Determine the display name for a project given a path and (optional) package name.</span>
+<span class="sd">    If a display_name.txt file is found, the first line is returned. Otherwise, return a</span>
+<span class="sd">    title-cased string from either the base directory or package_name (if provided).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path: Path for searching</span>
+<span class="sd">        package_name: Sphinx-style, dot-delimited package name (optional)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A display name for the provided path</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">/</span> <span class="s2">&quot;display_name.txt&quot;</span>
+    <span class="k">if</span> <span class="n">name_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">name_fo</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">name_fo</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">raw_name</span> <span class="o">=</span> <span class="n">package_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">package_name</span> <span class="k">else</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">capwords</span><span class="p">(</span><span class="n">raw_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">))</span></div>
 </pre></div>
 
            </div>
@@ -320,7 +345,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ae379aacfd90600e45fbae1833d075485ba2faf2">ae379aacfd90600e45fbae1833d075485ba2faf2</a>.
         </span>
       
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc package &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
+  <title>sphinx_gherkindoc package &mdash; sphinx-gherkindoc 3.2.0 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                3.1.2
+                3.2.0
               </div>
             
           
@@ -409,6 +409,29 @@ directory ordering.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="sphinx_gherkindoc.utils.display_name">
+<code class="sig-prename descclassname">sphinx_gherkindoc.utils.</code><code class="sig-name descname">display_name</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">package_name=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc/utils.html#display_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.utils.display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a human-readable name for a given project.</p>
+<p>Determine the display name for a project given a path and (optional) package name.
+If a display_name.txt file is found, the first line is returned. Otherwise, return a
+title-cased string from either the base directory or package_name (if provided).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – Path for searching</p></li>
+<li><p><strong>package_name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Sphinx-style, dot-delimited package name (optional)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A display name for the provided path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="sphinx_gherkindoc.utils.make_flat_name">
 <code class="sig-prename descclassname">sphinx_gherkindoc.utils.</code><code class="sig-name descname">make_flat_name</code><span class="sig-paren">(</span><em class="sig-param">path_list</em>, <em class="sig-param">filename_root=None</em>, <em class="sig-param">is_dir=False</em>, <em class="sig-param">ext='.rst'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc/utils.html#make_flat_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.utils.make_flat_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a flat file name from the provided information.</p>
@@ -489,7 +512,7 @@ directory ordering.</p>
 <p>Helper functions for writing rST files.</p>
 <dl class="function">
 <dt id="sphinx_gherkindoc.writer.feature_to_rst">
-<code class="sig-prename descclassname">sphinx_gherkindoc.writer.</code><code class="sig-name descname">feature_to_rst</code><span class="sig-paren">(</span><em class="sig-param">source_path</em>, <em class="sig-param">root_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc/writer.html#feature_to_rst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.writer.feature_to_rst" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">sphinx_gherkindoc.writer.</code><code class="sig-name descname">feature_to_rst</code><span class="sig-paren">(</span><em class="sig-param">source_path</em>, <em class="sig-param">root_path</em>, <em class="sig-param">url_from_tag=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sphinx_gherkindoc/writer.html#feature_to_rst"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sphinx_gherkindoc.writer.feature_to_rst" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a SphinxWriter containing the rST for the given feature file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -507,8 +530,7 @@ included in the TOC file instead of being referenced.
 This allows us to put content in the TOC file directly.
 The rST files that are included are expected to contain proper headers as well as
 content.
-If no rST files are included, a header is created using display_name from
-qecommon_tools.</p>
+If no rST files are included, a header is created using display_name.</p>
 <dl class="simple">
 <dt>NOTE: If there is more than one rST file present,</dt><dd><p>the order of their inclusion in the TOC is by filename sort order.</p>
 </dd>
@@ -547,7 +569,7 @@ qecommon_tools.</p>
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ae379aacfd90600e45fbae1833d075485ba2faf2">ae379aacfd90600e45fbae1833d075485ba2faf2</a>.
         </span>
       
 

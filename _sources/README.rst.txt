@@ -143,3 +143,22 @@ you may find you want to tweak the results some.
 It's a lot easier to do that `after` you have the basic process working.
 Experiment with the other optional parameters
 to get the effect(s) you want.
+
+Special Instructions for Tag Links
+----------------------------------
+
+Any tag can be converted into an anonymous link
+via a plugin or command-line argument.
+The converter needs to be a single function
+that accepts a single string parameter, the tag,
+and returns a URL if the tag should include a link
+or an empty string if not.
+
+In order to register the plugin for a ``poetry``-based project::
+
+    [tools.poetry.plugins."parsers"]
+    url = "my_custom_library.parse:optional_url_from_tag"
+
+In order to use the parser via command line,
+the ``--url_from-tag`` flag should be used.
+The provided string should be be formatted ``<library>:<method_name>``
