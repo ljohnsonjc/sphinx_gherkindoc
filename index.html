@@ -324,6 +324,15 @@ or an empty string if not.</p>
 <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;my_custom_library.parse:optional_url_from_tag&quot;</span>
 </pre></div>
 </div>
+<p>In order to register the plugin for a <code class="docutils literal notranslate"><span class="pre">setup.py</span></code>-based project:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">setup</span><span class="p">(</span>
+    <span class="o">...</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;parsers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;url = my_custom_library.parse:optional_url_from_tag&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
 <p>In order to use the parser via command line,
 the <code class="docutils literal notranslate"><span class="pre">--url_from-tag</span></code> flag should be used.
 The provided string should be be formatted <code class="docutils literal notranslate"><span class="pre">&lt;library&gt;:&lt;method_name&gt;</span></code></p>
@@ -409,7 +418,7 @@ config file.</p></li>
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/ae379aacfd90600e45fbae1833d075485ba2faf2">ae379aacfd90600e45fbae1833d075485ba2faf2</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/2d3bed82c0bc97921e0b961e676f7eebd032eea3">2d3bed82c0bc97921e0b961e676f7eebd032eea3</a>.
         </span>
       
 
