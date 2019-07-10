@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.utils &mdash; sphinx-gherkindoc 3.1.1 documentation</title>
+  <title>sphinx_gherkindoc.utils &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.1
+                3.1.2
               </div>
             
           
@@ -167,6 +167,7 @@
             
   <h1>Source code for sphinx_gherkindoc.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Generic utils used throughout the module.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">import</span> <span class="nn">sphinx.util</span>
@@ -287,7 +288,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">section</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SphinxWriter.write_to_file"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.write_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SphinxWriter.write_to_file"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.utils.SphinxWriter.write_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Write the provided output to the given filename.</span>
 
 <span class="sd">        Args:</span>
@@ -319,7 +320,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/f8a8f79369009c3f520352ac3a59db3bfab13c26">f8a8f79369009c3f520352ac3a59db3bfab13c26</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
         </span>
       
 

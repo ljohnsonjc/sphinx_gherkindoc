@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.cli &mdash; sphinx-gherkindoc 3.1.1 documentation</title>
+  <title>sphinx_gherkindoc.cli &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.1
+                3.1.2
               </div>
             
           
@@ -169,7 +169,7 @@
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="sd">&quot;&quot;&quot;Module for running the tool from the CLI.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Set</span>
 
@@ -186,70 +186,70 @@
 <span class="n">DEFAULT_TOC_DEPTH</span> <span class="o">=</span> <span class="mi">4</span>
 
 
-<div class="viewcode-block" id="process_args"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.process_args">[docs]</a><span class="k">def</span> <span class="nf">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="process_args"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.process_args">[docs]</a><span class="k">def</span> <span class="nf">process_args</span><span class="p">(</span>
+    <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">,</span>
+    <span class="n">gherkin_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span>
+    <span class="n">doc_project</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Process the supplied CLI args.&quot;&quot;&quot;</span>
-    <span class="n">work_to_do</span> <span class="o">=</span> <span class="n">scan_tree</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">exclude_patterns</span><span class="p">)</span>
+    <span class="n">work_to_do</span> <span class="o">=</span> <span class="n">scan_tree</span><span class="p">(</span><span class="n">gherkin_path</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">private</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">exclude_patterns</span><span class="p">)</span>
     <span class="n">maxtocdepth</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">maxtocdepth</span>
-    <span class="n">output_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">output_path</span>
     <span class="n">toc_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">toc_name</span>
     <span class="n">step_glossary_name</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">step_glossary_name</span>
     <span class="n">doc_project</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span>
-    <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">))</span>
+    <span class="n">root_path</span> <span class="o">=</span> <span class="n">gherkin_path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
 
-    <span class="n">top_level_toc_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">toc_name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.rst&quot;</span>
+    <span class="n">top_level_toc_filename</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{toc_name}</span><span class="s2">.rst&quot;</span>
 
-    <span class="n">non_empty_dirs</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">non_empty_dirs</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
     <span class="k">while</span> <span class="n">work_to_do</span><span class="p">:</span>
-        <span class="n">a_dir</span><span class="p">,</span> <span class="n">a_dir_list</span><span class="p">,</span> <span class="n">subdirs</span><span class="p">,</span> <span class="n">files</span> <span class="o">=</span> <span class="n">work_to_do</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">work_to_do</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="n">new_subdirs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">subdirs</span><span class="p">:</span>
-            <span class="n">subdir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a_dir</span><span class="p">,</span> <span class="n">subdir</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">current</span><span class="o">.</span><span class="n">sub_dirs</span><span class="p">:</span>
+            <span class="n">subdir_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span> <span class="o">/</span> <span class="n">current</span><span class="o">.</span><span class="n">dir_path</span> <span class="o">/</span> <span class="n">subdir</span>
             <span class="k">if</span> <span class="n">subdir_path</span> <span class="ow">in</span> <span class="n">non_empty_dirs</span><span class="p">:</span>
                 <span class="n">new_subdirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subdir</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">files</span> <span class="ow">or</span> <span class="n">new_subdirs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">files</span> <span class="ow">or</span> <span class="n">new_subdirs</span><span class="p">):</span>
             <span class="k">continue</span>
 
-        <span class="n">non_empty_dirs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a_dir</span><span class="p">)</span>
+        <span class="n">non_empty_dirs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">dir_path</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">:</span>
             <span class="k">continue</span>
 
-        <span class="n">toc_file</span> <span class="o">=</span> <span class="n">toctree</span><span class="p">(</span><span class="n">a_dir_list</span><span class="p">,</span> <span class="n">new_subdirs</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">,</span> <span class="n">root_path</span><span class="p">)</span>
+        <span class="n">toc_file</span> <span class="o">=</span> <span class="n">toctree</span><span class="p">(</span>
+            <span class="n">current</span><span class="o">.</span><span class="n">path_list</span><span class="p">,</span> <span class="n">new_subdirs</span><span class="p">,</span> <span class="n">current</span><span class="o">.</span><span class="n">files</span><span class="p">,</span> <span class="n">maxtocdepth</span><span class="p">,</span> <span class="n">root_path</span>
+        <span class="p">)</span>
         <span class="c1"># Check to see if we are at the last item to be processed</span>
         <span class="c1"># (which has already been popped)</span>
         <span class="c1"># to write the asked for master TOC file name.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">work_to_do</span><span class="p">:</span>
             <span class="n">toc_filename</span> <span class="o">=</span> <span class="n">top_level_toc_filename</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">toc_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="n">output_path</span><span class="p">,</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_dir_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="n">toc_filename</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">path_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">toc_file</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">toc_filename</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">a_file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-            <span class="n">a_file_list</span> <span class="o">=</span> <span class="n">a_dir_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">a_file</span><span class="p">]</span>
-            <span class="n">source_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">a_file_list</span><span class="p">)</span>
-            <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">a_file</span> <span class="ow">in</span> <span class="n">current</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>
+            <span class="n">a_file_list</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">path_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">a_file</span><span class="p">]</span>
+            <span class="n">source_name</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">a_file_list</span><span class="p">)</span>
+            <span class="n">source_path</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">/</span> <span class="n">source_name</span>
             <span class="k">if</span> <span class="n">is_feature_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
-                <span class="n">dest_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                    <span class="n">output_path</span><span class="p">,</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-                <span class="p">)</span>
+                <span class="n">dest_name</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">feature_rst_file</span> <span class="o">=</span> <span class="n">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">)</span>
                 <span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;converting &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">))</span>
                 <span class="n">feature_rst_file</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">dest_name</span><span class="p">)</span>
             <span class="k">elif</span> <span class="ow">not</span> <span class="n">is_rst_file</span><span class="p">(</span><span class="n">a_file</span><span class="p">):</span>
-                <span class="n">dest_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                    <span class="n">output_path</span><span class="p">,</span> <span class="n">make_flat_name</span><span class="p">(</span><span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+                <span class="n">dest_name</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">make_flat_name</span><span class="p">(</span>
+                    <span class="n">a_file_list</span><span class="p">,</span> <span class="n">is_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span>
                 <span class="p">)</span>
                 <span class="n">verbose</span><span class="p">(</span><span class="s1">&#39;copying &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">))</span>
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">dest_name</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">step_glossary_name</span><span class="p">:</span>
-        <span class="n">glossary_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.rst&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step_glossary_name</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="n">glossary_filename</span> <span class="o">=</span> <span class="n">output_path</span> <span class="o">/</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{step_glossary_name}</span><span class="s2">.rst&quot;</span>
         <span class="n">glossary</span> <span class="o">=</span> <span class="n">make_steps_glossary</span><span class="p">(</span><span class="n">doc_project</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">:</span>
@@ -331,19 +331,20 @@
     <span class="n">set_dry_run</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">)</span>
     <span class="n">set_verbose</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
 
+    <span class="n">gherkin_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">gherkin_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not a directory.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">gherkin_path</span><span class="p">))</span>
+
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span> <span class="o">=</span> <span class="n">gherkin_path</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">):</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not a directory.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gherkin_path</span><span class="p">))</span>
-
-    <span class="n">args</span><span class="o">.</span><span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">):</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output_path</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">dry_run</span><span class="p">:</span>
-            <span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;creating directory: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">))</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_path</span><span class="p">)</span>
+            <span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;creating directory: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span>
+            <span class="n">output_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+    <span class="n">process_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">gherkin_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">doc_project</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="config"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.cli.config">[docs]</a><span class="k">def</span> <span class="nf">config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -371,7 +372,7 @@
         <span class="s2">&quot;</span><span class="si">%%</span><span class="s2">VERSION</span><span class="si">%%</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
         <span class="s2">&quot;</span><span class="si">%%</span><span class="s2">RELEASE</span><span class="si">%%</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">release</span><span class="p">,</span>
     <span class="p">}</span>
-    <span class="n">source_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+    <span class="n">source_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
     <span class="n">sample_contents</span> <span class="o">=</span> <span class="n">get_file_contents</span><span class="p">(</span><span class="n">source_dir</span><span class="p">,</span> <span class="s2">&quot;sample-conf.py&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">old_value</span><span class="p">,</span> <span class="n">new_value</span> <span class="ow">in</span> <span class="n">substitutions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">sample_contents</span> <span class="o">=</span> <span class="n">sample_contents</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old_value</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
@@ -397,7 +398,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/f8a8f79369009c3f520352ac3a59db3bfab13c26">f8a8f79369009c3f520352ac3a59db3bfab13c26</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
         </span>
       
 

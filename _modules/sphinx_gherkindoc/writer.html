@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.writer &mdash; sphinx-gherkindoc 3.1.1 documentation</title>
+  <title>sphinx_gherkindoc.writer &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.1
+                3.1.2
               </div>
             
           
@@ -168,7 +168,7 @@
   <h1>Source code for sphinx_gherkindoc.writer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Helper functions for writing rST files.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -207,7 +207,7 @@
     <span class="n">subdirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">maxtocdepth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">root_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SphinxWriter</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return a SphinxWriter for one level of a directory tree.</span>
@@ -234,16 +234,15 @@
             <span class="k">continue</span>
 
         <span class="n">source_name_list</span> <span class="o">=</span> <span class="n">path_list</span> <span class="o">+</span> <span class="p">[</span><span class="n">a_file</span><span class="p">]</span>
-        <span class="n">source_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">source_name_list</span><span class="p">)</span>
-        <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">source_name</span><span class="p">)</span>
+        <span class="n">source_name</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">source_name_list</span><span class="p">)</span>
+        <span class="n">source_path</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">/</span> <span class="n">source_name</span>
         <span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Copying content from: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">))</span>
         <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="n">get_file_contents</span><span class="p">(</span><span class="n">source_path</span><span class="p">),</span> <span class="n">line_breaks</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">need_header</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">need_header</span><span class="p">:</span>
         <span class="c1"># We&#39;re just adding a boiler plate heading.</span>
-        <span class="n">temp_path_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">root_path</span><span class="p">]</span> <span class="o">+</span> <span class="n">path_list</span> <span class="k">if</span> <span class="n">path_list</span> <span class="k">else</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">]</span>
-        <span class="n">of</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">display_name</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">temp_path_list</span><span class="p">)))</span>
+        <span class="n">of</span><span class="o">.</span><span class="n">create_section</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">display_name</span><span class="p">(</span><span class="n">root_path</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="o">*</span><span class="n">path_list</span><span class="p">)))</span>
 
     <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="s2">&quot;.. toctree::&quot;</span><span class="p">)</span>
     <span class="n">of</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span>
@@ -266,7 +265,7 @@
 
 <span class="c1"># Simplified this from a class, for various reasons.</span>
 <span class="c1"># Additional simplification work is needed!!!!</span>
-<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">root_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SphinxWriter</span><span class="p">:</span>
+<div class="viewcode-block" id="feature_to_rst"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.writer.feature_to_rst">[docs]</a><span class="k">def</span> <span class="nf">feature_to_rst</span><span class="p">(</span><span class="n">source_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">root_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SphinxWriter</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Return a SphinxWriter containing the rST for the given feature file.&quot;&quot;&quot;</span>
     <span class="n">output_file</span> <span class="o">=</span> <span class="n">SphinxWriter</span><span class="p">()</span>
 
@@ -326,7 +325,9 @@
     <span class="k">def</span> <span class="nf">steps</span><span class="p">(</span><span class="n">steps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">behave</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">Step</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">:</span>
             <span class="n">step_glossary</span><span class="p">[</span><span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span><span class="o">.</span><span class="n">add_reference</span><span class="p">(</span>
-                <span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_path</span><span class="p">),</span> <span class="n">step</span><span class="o">.</span><span class="n">line</span>
+                <span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">root_path</span><span class="p">),</span>
+                <span class="n">step</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">bold_step</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(</span><span class="se">\\</span><span class="s2">\&lt;.*?\&gt;)&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;**\1**&quot;</span><span class="p">,</span> <span class="n">rst_escape</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
             <span class="n">output_file</span><span class="o">.</span><span class="n">add_output</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;- </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step</span><span class="o">.</span><span class="n">keyword</span><span class="p">,</span> <span class="n">bold_step</span><span class="p">))</span>
@@ -390,7 +391,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/f8a8f79369009c3f520352ac3a59db3bfab13c26">f8a8f79369009c3f520352ac3a59db3bfab13c26</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
         </span>
       
 

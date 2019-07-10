@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sphinx_gherkindoc.files &mdash; sphinx-gherkindoc 3.1.1 documentation</title>
+  <title>sphinx_gherkindoc.files &mdash; sphinx-gherkindoc 3.1.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                3.1.1
+                3.1.2
               </div>
             
           
@@ -169,6 +169,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;File-related utils used throughout the module.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">fnmatch</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">NamedTuple</span>
 
 
@@ -180,7 +181,7 @@
 <div class="viewcode-block" id="DirData"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.files.DirData">[docs]</a><span class="k">class</span> <span class="nc">DirData</span><span class="p">(</span><span class="n">NamedTuple</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Named tuple containing all the modified os.walk parts for a given path.&quot;&quot;&quot;</span>
 
-    <span class="n">dir_path</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">dir_path</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span>
     <span class="n">path_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">sub_dirs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
@@ -227,7 +228,7 @@
 
 
 <div class="viewcode-block" id="scan_tree"><a class="viewcode-back" href="../../sphinx_gherkindoc.html#sphinx_gherkindoc.files.scan_tree">[docs]</a><span class="k">def</span> <span class="nf">scan_tree</span><span class="p">(</span>
-    <span class="n">starting_point</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">private</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">:</span> <span class="n">Iterable</span>
+    <span class="n">starting_point</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">,</span> <span class="n">private</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">:</span> <span class="n">Iterable</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DirData</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return list of entities to process, in top-down orders.</span>
@@ -237,18 +238,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">me</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">starting_point</span><span class="p">)):</span>
+    <span class="c1"># Do not assume an absolute path is provided</span>
+    <span class="n">starting_point</span> <span class="o">=</span> <span class="n">starting_point</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">me</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">starting_point</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">_is_excluded</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">):</span>
             <span class="n">dirs</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">continue</span>
-
-        <span class="n">root_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">starting_point</span><span class="p">)</span>
-        <span class="n">me_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">root_path</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
-
-        <span class="c1"># This prevents creating &quot;dot&quot; files in the output directory, which can be very</span>
-        <span class="c1"># confusing.</span>
-        <span class="k">if</span> <span class="n">me_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">curdir</span><span class="p">:</span>
-            <span class="n">me_list</span> <span class="o">=</span> <span class="n">me_list</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="c1"># Remove all hidden directories on principle.</span>
         <span class="c1"># This stops scanning into version control directories such as .git, ,hg, etc.</span>
@@ -257,9 +252,15 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">private</span><span class="p">:</span>
             <span class="n">dirs</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">_not_private</span><span class="p">,</span> <span class="n">dirs</span><span class="p">)</span>
 
-        <span class="n">files</span> <span class="o">=</span> <span class="n">_wanted_source_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">)</span>
-
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DirData</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">me_list</span><span class="p">,</span> <span class="n">dirs</span><span class="p">[:],</span> <span class="n">files</span><span class="p">))</span>
+        <span class="n">me_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">DirData</span><span class="p">(</span>
+                <span class="n">me_path</span><span class="p">,</span>
+                <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">me_path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">starting_point</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span><span class="o">.</span><span class="n">parts</span><span class="p">],</span>
+                <span class="n">dirs</span><span class="p">[:],</span>
+                <span class="n">_wanted_source_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">exclude_patterns</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
@@ -278,7 +279,7 @@
       
         <span class="build">
           Build
-          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/f8a8f79369009c3f520352ac3a59db3bfab13c26">f8a8f79369009c3f520352ac3a59db3bfab13c26</a>.
+          <a href="https://github.rackspace.com/QE-Tools/sphinx_gherkindoc/tree/5c8a17083de353dc30fec50603846ce4a03ce2ab">5c8a17083de353dc30fec50603846ce4a03ce2ab</a>.
         </span>
       
 
