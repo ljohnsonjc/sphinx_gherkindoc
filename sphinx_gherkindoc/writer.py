@@ -22,7 +22,22 @@ from .utils import (
 )
 
 MAIN_STEP_KEYWORDS = ["Given", "When", "Then"]
-AVAILABLE_ROLES = ["step-keyword"]
+AVAILABLE_ROLES = [
+    "step-keyword",
+    "step-text",
+    "feature-description",
+    "scenario-description",
+    *(
+        f"section-keyword-{keyword}"
+        for keyword in (
+            "feature",
+            "background",
+            "scenario",
+            "scenario-outline",
+            "examples",
+        )
+    ),
+]
 
 
 # The csv-table parser for restructuredtext does not allow for escaping so use
@@ -118,16 +133,31 @@ def feature_to_rst(
     output_file = SphinxWriter()
 
     def section(level: int, obj: behave.model_core.BasicStatement) -> None:
-        section_name = f"{obj.keyword}: {rst_escape(obj.name)}"
+        keyword = obj.keyword
+        role = f"section-keyword-{keyword.lower().replace(' ', '-')}"
+        section_name = f":{role}:`{keyword}`: {rst_escape(obj.name)}"
         output_file.create_section(level, section_name.rstrip(": "))
 
-    def description(description: Union[str, List[str]]) -> None:
+    def description(
+        obj: Union[
+            behave.model.Feature, behave.model.Scenario, behave.model.ScenarioOutline
+        ]
+    ) -> None:
+        description = obj.description
         if not description:
             return
         if not isinstance(description, list):
             description = [description]
+
+        description_type = obj.keyword.lower()
+        if description_type == "scenario outline":
+            description_type = "scenario"
+
         for line in description:
-            output_file.add_output(rst_escape(line), indent_by=INDENT_DEPTH)
+            output_file.add_output(
+                f":{description_type}-description:`{rst_escape(line)}`",
+                indent_by=INDENT_DEPTH,
+            )
             # Since behave strips newlines, a reasonable guess must be made as
             # to when a newline should be re-inserted
             if line[-1] == "." or line == description[-1]:
@@ -191,7 +221,7 @@ def feature_to_rst(
         # Every step keyword has the `step-keyword` role applied to it
         # so that users can customize how the step keyword is formatted with CSS.
         formatted_step = step_format.format(
-            f":step-keyword:`{step.keyword}` {formatted_step}"
+            f":step-keyword:`{step.keyword}` :step-text:`{formatted_step}`"
         )
         return formatted_step
 
@@ -241,7 +271,7 @@ def feature_to_rst(
 
     feature = behave.parser.parse_file(source_path)
     section(1, feature)
-    description(feature.description)
+    description(feature)
     if feature.background and not integrate_background:
         section(2, feature.background)
         steps(feature.background.steps)
@@ -249,7 +279,7 @@ def feature_to_rst(
     for scenario in feature.scenarios:
         section(2, scenario)
         tags(scenario.tags, feature)
-        description(scenario.description)
+        description(scenario)
         if integrate_background and feature.background:
             steps(feature.background.steps, step_format=background_step_format)
         steps(scenario.steps)
