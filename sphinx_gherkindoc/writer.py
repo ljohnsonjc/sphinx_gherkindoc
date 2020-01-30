@@ -24,7 +24,7 @@ from .utils import (
 MAIN_STEP_KEYWORDS = ["Given", "When", "Then"]
 AVAILABLE_ROLES = [
     "step-keyword",
-    "step-text",
+    "step-content",
     "feature-description",
     "scenario-description",
     *(
@@ -150,6 +150,7 @@ def feature_to_rst(
             description = [description]
 
         description_type = obj.keyword.lower()
+        # Treat Scenario and Scenario Description descriptions the same
         if description_type == "scenario outline":
             description_type = "scenario"
 
@@ -175,7 +176,9 @@ def feature_to_rst(
         # each new line must be indented.
         for line in itertools.chain(*(x.splitlines() for x in text)):
             output_file.add_output(
-                rst_escape(line), line_breaks=2, indent_by=INDENT_DEPTH
+                f":step-text:`{rst_escape(line)}`",
+                line_breaks=2,
+                indent_by=INDENT_DEPTH,
             )
 
     # Build the URL parser once since `ticket_url_or_tag` is called multiple times
@@ -221,7 +224,7 @@ def feature_to_rst(
         # Every step keyword has the `step-keyword` role applied to it
         # so that users can customize how the step keyword is formatted with CSS.
         formatted_step = step_format.format(
-            f":step-keyword:`{step.keyword}` :step-text:`{formatted_step}`"
+            f":step-keyword:`{step.keyword}` :step-content:`{formatted_step}`"
         )
         return formatted_step
 
