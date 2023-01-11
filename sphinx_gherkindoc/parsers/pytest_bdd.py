@@ -133,7 +133,7 @@ class Feature(PytestModel):
     """Feature model for Pytest-Bdd."""
 
     def __init__(self, root_path: str, source_path: str):
-        self._data = pytest_bdd.feature.Feature(
+        self._data = pytest_bdd.feature.get_feature(
             root_path, pathlib.Path(source_path).resolve().relative_to(root_path)
         )
 
