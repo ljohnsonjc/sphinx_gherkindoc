@@ -375,8 +375,6 @@ def feature_to_rst(
 
     section(1, feature)
     description(feature, raw_descriptions=raw_descriptions)
-    if feature.examples:
-        examples(feature)
     if feature.background and not integrate_background:
         section(2, feature.background)
         steps(feature.background.steps)
