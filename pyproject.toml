@@ -22,7 +22,7 @@ sphinx-autodoc-typehints = "^1.6"
 # branch: scenario-descriptions
 # This branch is still active, so we lock to a specific commit in the branch
 # to prevent unexpected issues if that branch is pushed to.
-pytest-bdd = {git = "https://github.com/rbcasperson/pytest-bdd.git", rev = "b3d464bef1af2accbef493c6be85fc6232c318ed"}
+pytest-bdd = {git = "https://github.com/ljohnsonjc/pytest-bdd.git", rev = "42987e32cd6f946b9306457ff9c2cace3b41094a"}
 pytest-cov = "^2.7"
 jgt_tools = "^0.5.0"
 

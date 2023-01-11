@@ -161,6 +161,8 @@ def feature_to_rst(
 
     def section(level: int, obj: behave.model_core.BasicStatement) -> None:
         keyword = obj.keyword
+        # pytest-bdd v5 uses ScenarioTemplate instead of Scenario
+        keyword = keyword.replace("ScenarioTemplate", "Scenario")
         # "scenario outline" causes issues in the role name,
         # so we format the role name before applying it.
         keyword_role = role_name_from(f"gherkin-{keyword}-keyword")
