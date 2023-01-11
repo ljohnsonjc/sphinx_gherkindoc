@@ -220,7 +220,7 @@ Here are the available CSS classes:
 - ``gherkin-feature-description``
 - ``gherkin-background-keyword``
 - ``gherkin-background-content``
-- ``gherkin-scenario-keyword``
+- ``gherkin-scenariotemplate-keyword``
 - ``gherkin-scenario-content``
 - ``gherkin-scenario-description``
 - ``gherkin-scenario-outline-keyword``
@@ -248,7 +248,7 @@ Example ``.css`` File::
         color: blue;
     }
 
-    .gherkin-scenario-keyword, .gherkin-scenario-outline-keyword {
+    .gherkin-scenariotemplate-keyword, .gherkin-scenario-outline-keyword {
         color: indigo;
     }
     .gherkin-scenario-content, .gherkin-scenario-outline-content {
